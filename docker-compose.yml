@@ -1,0 +1,16 @@
+# docker-compose.yml
+version: "3.9"
+services:
+  mongo:
+    image: mongo:6
+    ports: ["27017:27017"]
+    volumes: [mongo_data:/data/db]
+  app:
+    build: .
+    ports: ["9000:9000"]
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/
+      - MONGO_DB=magicgame
+    depends_on: [mongo]
+volumes:
+  mongo_data: {}
